@@ -6,11 +6,18 @@ from datetime import datetime
 
 def create_task(db, request: TaskBase, user: dict):
     user_check = db.table("users").select("id").eq("id", request.created_by).execute()
+    
+    responds_uuid = db.table("users").select("id, uid").eq("id", request.created_by).execute()
+    
+    if responds_uuid.data:
+        user_uuid = responds_uuid.data[0]['uid']
+        
     if not user_check.data:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"User with id {request.created_by} does not exist"
         )
+        
     data = {
         "batch_id": request.batch_id,
         "task_name": request.task_name,
@@ -18,6 +25,7 @@ def create_task(db, request: TaskBase, user: dict):
         "status": request.status,
         "updated_at": datetime.now().isoformat(),
         "created_by": request.created_by,  # Must match existing users.id
+        "user_id": user_uuid,
         "task_notes": request.task_notes
     }
 

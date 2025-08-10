@@ -67,6 +67,7 @@ class TaskBase(BaseModel):
   task_description: str
   status: str # 'Pending', 'In progress', 'Complete', 'Aborted', 'Delayed', 'On hold'
   created_by: int
+  user_id: str
   updated_at: datetime
   task_notes: Optional[str] = None
 
@@ -82,6 +83,7 @@ class TaskDisplay(BaseModel):  # what is displayed
   task_notes: Optional[str] = None
   created_by: int
   updated_at: datetime
+  user_id: str
   batch_id: int
 
   class Config:
