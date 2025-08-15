@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from dependencies.getToken import verify_token
+from dependencies.auth_token import verify_jwt
 from routers.schemas import BatchBase, BatchDisplay
 from db.database import get_db
 from db import db_batch
@@ -19,7 +19,7 @@ def create(request: BatchBase, db=Depends(get_db)):
 
 
 @router.get('/all', response_model=List[BatchDisplay])
-async def batchs(db=Depends(get_db), user=Depends(verify_token)):
+async def batchs(db=Depends(get_db), user=Depends(verify_jwt)):
     return db_batch.get_all(db)
 
 
