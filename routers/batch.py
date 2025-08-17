@@ -14,7 +14,7 @@ router = APIRouter(
 
 
 @router.post('/create-batch', response_model=BatchDisplay)
-def create(request: BatchBase, db=Depends(get_db)):
+def create(request: BatchBase, db=Depends(get_db), user=Depends(verify_jwt)):
     return db_batch.create_batch(db, request)
 
 
@@ -24,5 +24,5 @@ async def batchs(db=Depends(get_db), user=Depends(verify_jwt)):
 
 
 @router.get('/delete/{id}')
-def delete(id: int, db=Depends(get_db)):
+def delete(id: int, db=Depends(get_db), user=Depends(verify_jwt)):
     return db_batch.delete(id, db)

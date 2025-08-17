@@ -19,7 +19,7 @@ class User(BaseModel):
     id: str
 
 # Get these from your Supabase project settings
-JWT_SECRET = "+6QCQvVgJ6Lh6RUqIfuf9KVS9ZcAg8hEMhJem7xJ16Q+3xulpBy4wVCr2Mz3tMTibvuPBjk4dYwSEqquYa0XzA=="  # !!! Keep this secure !!!
+JWT_SECRET = os.getenv("SUPABASE_JWT_KEY")
 ALGORITHM = "HS256"
 
 security = HTTPBearer()
