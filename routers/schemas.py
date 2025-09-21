@@ -28,7 +28,6 @@ class User(BaseModel):
   
 ##### Batch Schema #####
 class BatchBase(BaseModel):
-    batch_id: uuid.UUID
     batch_title: str
     batch_description: Optional[str] = None
     batch_status: str
@@ -65,7 +64,6 @@ class BatchBaseUpdate(BaseModel):
         orm_mode = True
 
 class BatchDisplay(BaseModel): # what is displayed
-    batch_id: uuid.UUID
     batch_title: str
     batch_description: Optional[str] = None
     batch_status: str
