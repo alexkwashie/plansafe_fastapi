@@ -42,8 +42,6 @@ def create_batch(request: BatchBase, user: dict = None):
                 "location": request.location,
                 "estimated_duration": request.estimated_duration,
                 "process_duration": request.process_duration,
-                "reviewed_by": str(request.reviewed_by),
-                "review_notes": request.review_notes,
                 "created_at": request.created_at.isoformat() if request.created_at else None,
                 "created_by": str(request.created_by),
 

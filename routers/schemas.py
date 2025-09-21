@@ -38,8 +38,8 @@ class BatchBase(BaseModel):
     end_time: Optional[str] = None
     location: Optional[str] = None
     color: Optional[str] = None
-    estimated_duration: Optional[str] = None
-    process_duration: Optional[str] = None
+    estimated_duration: Optional[int] = None
+    process_duration: Optional[int] = None
     created_at: Optional[datetime] = None
     created_by: uuid.UUID
 
