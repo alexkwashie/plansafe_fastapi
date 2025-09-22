@@ -8,11 +8,12 @@ import uuid
 class UserBase(BaseModel):
   username: str
   email: str
-  password: str
+
 
 class UserDisplay(BaseModel): # what is displayed to the user
   username: str
   email: str
+  uid: uuid.UUID
 
   class Config:
     orm_mode = True
@@ -88,7 +89,6 @@ class BatchDisplay(BaseModel): # what is displayed
 
 
 class TaskBase(BaseModel):
-    task_id: uuid.UUID
     batch_id: uuid.UUID
     task_seq: Optional[int] = None
     task_name: str

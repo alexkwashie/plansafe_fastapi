@@ -29,6 +29,6 @@ def delete(task_incident_id: uuid.UUID, db=Depends(get_db)):
     """Delete a task raw materials by its ID."""
     if not db_incident.delete(task_incident_id, db):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task raw material not found")
-    return {"detail": f"Task Raw Materials {task_raw_material_id} deleted successfully"}
+    return {"detail": f"Task Raw Materials {task_incident_id} deleted successfully"}
 
 
