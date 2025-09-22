@@ -7,7 +7,7 @@ import uuid
 
 auth_supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
 
-def create_task_assignees(request: TaskAssigneeBase, task_id: uuid.UUID, user_id: uuid.UUID, user: dict = None):
+def create_task_assignees(task_id: uuid.UUID, user_id: uuid.UUID, user: dict = None):
     try:
         # Create Supabase client with the user's token
         if user and "access_token" in user and "refresh_token" in user:
@@ -43,14 +43,16 @@ def create_task_assignees(request: TaskAssigneeBase, task_id: uuid.UUID, user_id
 
 
 
-def get_all_task_assignee(db, task_id: uuid.UUID):
-    response = db.table("tasks_assignees").select("*").eq("task_id", task_id).execute()
+def get_all_task_assignee(task_id: uuid.UUID):
+    response = auth_supabase.table("task_assignees").select("*").eq("task_id", task_id).execute()
     if not response.data:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Failed to fetch tasks")
     tasks_assignee = response.data
-
+    
+    print(tasks_assignee)
     
     return tasks_assignee
+    
 
 
 

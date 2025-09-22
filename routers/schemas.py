@@ -169,7 +169,7 @@ class TaskAssigneeBase(BaseModel):  # what is displayed
 class TaskAssigneeDisplay(BaseModel):  # what is displayed
   task_id: Optional[uuid.UUID] = None
   user_id: Optional[uuid.UUID] = None
-  assignee_id: Optional[uuid.UUID] = None
+  assignee_id: Optional[str] = None
 
   class Config:
     orm_mode = True
