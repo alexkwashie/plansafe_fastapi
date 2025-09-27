@@ -65,6 +65,7 @@ class BatchBaseUpdate(BaseModel):
         orm_mode = True
 
 class BatchDisplay(BaseModel): # what is displayed
+    batch_id: Optional[uuid.UUID] = None
     batch_title: str
     batch_description: Optional[str] = None
     batch_status: str
