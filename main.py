@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from routers import batch, task, task_assignee, task_dependency, task_machinery, task_raw_materials, users
+from routers import users
+from routers.production_planning import batch, batch_assignee, task, task_assignee, task_dependency, task_machinery, task_raw_materials
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,6 +9,8 @@ app = FastAPI()
 #app = FastAPI(docs_url=None, redoc_url=None)
 
 app.include_router(batch.router)
+app.include_router(batch_assignee.router)
+
 app.include_router(task.router)
 app.include_router(task_assignee.router)
 app.include_router(task_dependency.router)

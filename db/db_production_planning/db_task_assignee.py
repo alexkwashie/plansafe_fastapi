@@ -1,5 +1,4 @@
 from fastapi import HTTPException, status
-from routers.schemas import TaskAssigneeBase
 from fastapi.responses import JSONResponse
 from supabase import create_client
 import os

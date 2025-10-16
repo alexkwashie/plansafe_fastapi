@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from dependencies.auth import verify_token
 from routers.schemas import TaskMachineryBase, TaskMachineryDisplay
 from db.database import get_db
-from db import db_task_machinery
+from db.db_production_planning import db_task_machinery
 from typing import List
 from routers.schemas import UserAuth
 import uuid

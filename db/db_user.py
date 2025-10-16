@@ -1,9 +1,10 @@
 from fastapi import HTTPException, status
-from routers.schemas import MachineryBase
-from fastapi.responses import JSONResponse
 from supabase import create_client
 import os
 import uuid
+from dotenv import load_dotenv
+
+load_dotenv()
 
 auth_supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
 
@@ -11,7 +12,7 @@ auth_supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY
 def get_all_users():
     response = auth_supabase.table("users").select("*").execute()
     if not response.data:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Failed to fetch machinery data")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Failed to fetch user data")
     users = response.data  # Get all user records
     print("Retrieved users:", users)  # Debug statement
 

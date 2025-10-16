@@ -12,6 +12,8 @@ class UserBase(BaseModel):
 
 class UserDisplay(BaseModel): # what is displayed to the user
   username: str
+  firstName: str
+  lastName: str
   email: str
   uid: uuid.UUID
 
@@ -19,9 +21,22 @@ class UserDisplay(BaseModel): # what is displayed to the user
     orm_mode = True
 
 
-# For BatchDisplay
-class User(BaseModel):
-  id: int
+######### Batch Assignee ###############
+
+class BatchAssigneeBase(BaseModel):  
+  batch_id: Optional[uuid.UUID] = None
+  user_id: Optional[uuid.UUID] = None
+  batch_assignee_id: Optional[str] = None
+
+  class Config:
+    orm_mode = True
+    
+
+class BatchAssigneeDisplay(BaseModel):  # what is displayed
+  batch_id: Optional[uuid.UUID] = None
+  user_id: Optional[uuid.UUID] = None
+  batch_assignee_id: Optional[str] = None
+
   class Config:
     orm_mode = True
     
