@@ -18,6 +18,8 @@ def get_all_users():
 
     return [{
         "username": str(user.get("username")),
+        "firstname": str(user.get("firstName")),
+        "lastname": str(user.get("lastName")),
         "email": str(user.get("email")),
         "uid": str(user.get("uid"))
     } for user in users]  # Return a list of user dictionaries
@@ -32,6 +34,8 @@ def get_current_user(uid: uuid.UUID):
         
         return {
             "username": user_data.get("username"),
+            "firstname": user_data.get("firstName"),
+            "lastname": user_data.get("lastName"),
             "email": user_data.get("email"),
             "uid": user_data.get("uid"),
             # Add any other fields you need

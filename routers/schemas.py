@@ -12,8 +12,8 @@ class UserBase(BaseModel):
 
 class UserDisplay(BaseModel): # what is displayed to the user
   username: str
-  firstName: str
-  lastName: str
+  firstname: str
+  lastname: str
   email: str
   uid: uuid.UUID
 
