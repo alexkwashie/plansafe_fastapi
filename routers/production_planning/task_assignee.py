@@ -24,9 +24,9 @@ def all_task_assignees(task_id: uuid.UUID):
     return db_task_assignee.get_all_task_assignee(task_id)
 
 
-@router.delete('/delete/{assignee_id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/delete/{task_assignee_id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete(task_assignee_id: uuid.UUID):
     """Delete a task assignee by its ID."""
     if not db_task_assignee.delete(task_assignee_id):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Incident not found")
-    return {"detail": f"Assignee {task_assignee_id} deleted successfully"}
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task Assignee not found")
+    return {"detail": f"Task Assignee:{task_assignee_id} deleted successfully"}
