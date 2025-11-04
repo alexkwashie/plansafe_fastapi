@@ -9,6 +9,8 @@ class UserBase(BaseModel):
   username: str
   email: str
 
+  class Config():
+    orm_mode = True
 
 class UserDisplay(BaseModel): # what is displayed to the user
   username: str
@@ -18,7 +20,7 @@ class UserDisplay(BaseModel): # what is displayed to the user
   uid: uuid.UUID
 
   class Config:
-        from_attributes = True
+    orm_mode = True
 
 
 ######### Batch Assignee ###############
@@ -29,7 +31,7 @@ class BatchAssigneeBase(BaseModel):
   batch_assignee_id: Optional[str] = None
 
   class Config:
-        from_attributes = True
+    orm_mode = True
     
 
 class BatchAssigneeDisplay(BaseModel):  # what is displayed
@@ -38,7 +40,7 @@ class BatchAssigneeDisplay(BaseModel):  # what is displayed
   batch_assignee_id: Optional[str] = None
 
   class Config:
-        from_attributes = True
+    orm_mode = True
     
   
 ##### Batch Schema #####
@@ -58,7 +60,7 @@ class BatchBase(BaseModel):
     created_by: uuid.UUID
 
     class Config:
-        from_attributes = True
+      orm_mode = True
         
 class BatchBaseUpdate(BaseModel):
     batch_title: str
@@ -76,7 +78,8 @@ class BatchBaseUpdate(BaseModel):
     updated_at: Optional[datetime] = None
 
     class Config:
-        from_attributes = True
+      orm_mode = True
+
 
 class BatchDisplay(BaseModel): # what is displayed
     batch_id: Optional[uuid.UUID] = None
@@ -97,7 +100,7 @@ class BatchDisplay(BaseModel): # what is displayed
     updated_by: Optional[uuid.UUID] = None
 
     class Config:
-        from_attributes = True
+      orm_mode = True
 
 
 
@@ -116,9 +119,8 @@ class TaskBase(BaseModel):
     created_at: Optional[datetime] = None
     created_by: Optional[uuid.UUID] = None
     
-
     class Config:
-        from_attributes = True
+      orm_mode = True
 
 
 class TaskUpdateBase(BaseModel):
@@ -135,8 +137,8 @@ class TaskUpdateBase(BaseModel):
     updated_at: Optional[datetime] = None
     updated_by: Optional[uuid.UUID] = None
 
-    class Config:
-        from_attributes = True
+    class Config():
+      orm_mode = True
 
 class TaskDisplay(BaseModel):  # what is displayed
   task_id: uuid.UUID
@@ -156,8 +158,8 @@ class TaskDisplay(BaseModel):  # what is displayed
   updated_at: Optional[datetime] = None
   updated_by: Optional[uuid.UUID] = None
 
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
 
 
 class UserAuth(BaseModel):
@@ -175,8 +177,8 @@ class TaskAssigneeBase(BaseModel):  # what is displayed
   user_id: Optional[uuid.UUID] = None
   assignee_id: Optional[uuid.UUID] = None
 
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
 
 class TaskAssigneeDisplay(BaseModel):  # what is displayed
@@ -184,8 +186,8 @@ class TaskAssigneeDisplay(BaseModel):  # what is displayed
   user_id: Optional[uuid.UUID] = None
   assignee_id: Optional[uuid.UUID] = None
 
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
     
 ######### Task Dependency ###############
@@ -195,8 +197,8 @@ class TaskDependencyDisplay(BaseModel):
   task_id_1: Optional[uuid.UUID] = None
   task_id_2: Optional[uuid.UUID] = None
 
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
 
 class TaskDependencyBase(BaseModel):  
@@ -215,8 +217,8 @@ class TaskIncidentDisplay(BaseModel):
   task_id: Optional[uuid.UUID] = None
   incident_id: Optional[uuid.UUID] = None
   
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
 
 class TaskIncidentBase(BaseModel):  
@@ -224,8 +226,8 @@ class TaskIncidentBase(BaseModel):
   task_id: Optional[uuid.UUID] = None
   incident_id: Optional[uuid.UUID] = None
   
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
     
 ######### Task Machinery ###############
@@ -234,8 +236,8 @@ class TaskMachineryDisplay(BaseModel):
   task_id: Optional[uuid.UUID] = None
   machinery_id: Optional[uuid.UUID] = None
   
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
 
 class TaskMachineryBase(BaseModel):  
@@ -243,8 +245,8 @@ class TaskMachineryBase(BaseModel):
   task_id: Optional[uuid.UUID] = None
   machinery_id: Optional[uuid.UUID] = None
   
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
     
 ######### Task Raw Materials ###############
@@ -254,8 +256,8 @@ class TaskRawMaterialDisplay(BaseModel):
   raw_material_id: Optional[uuid.UUID] = None
   assigned_quantity: Optional[int] = None
   
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
 
 class TaskRawMaterialBase(BaseModel):  
@@ -264,8 +266,8 @@ class TaskRawMaterialBase(BaseModel):
   raw_material_id: Optional[uuid.UUID] = None
   assigned_quantity: Optional[int] = None
   
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
     
     
@@ -284,8 +286,8 @@ class MachineryDisplay(BaseModel):
   updated_at: Optional[datetime] = None
   updated_by: Optional[uuid.UUID] = None
   
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
 
 class MachineryBase(BaseModel):  
@@ -299,8 +301,8 @@ class MachineryBase(BaseModel):
   created_at: Optional[datetime] = None
   created_by: Optional[uuid.UUID] = None
 
-  class Config:
-    from_attributes = True
+  class Config():
+    orm_mode = True
     
     
 class MachineryBaseUpdate(BaseModel):
@@ -314,8 +316,8 @@ class MachineryBaseUpdate(BaseModel):
   updated_at: Optional[datetime] = None
   updated_by: Optional[uuid.UUID] = None
   
-  class Config:
-    from_attributes = True   
+  class Config():
+    orm_mode = True   
 
 ######### Incident Table ###############
 class IncidentBase(BaseModel):
@@ -330,8 +332,8 @@ class IncidentBase(BaseModel):
   incident_notes: Optional[str] = None
   incident_severity: Optional[str] = 'pending'
   
-  class Config:
-    from_attributes = True 
+  class Config():
+    orm_mode = True 
 
 class IncidentDisplay(BaseModel):
   incident_id: uuid.UUID
@@ -345,5 +347,8 @@ class IncidentDisplay(BaseModel):
   incident_notes: Optional[str] = None
   incident_severity: Optional[str] = 'pending'
 
-  class Config:
-    from_attributes = True 
+  class Config():
+    orm_mode = True
+    
+    
+    
