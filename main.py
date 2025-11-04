@@ -41,6 +41,8 @@ app.add_middleware(
     allow_headers=['*']
 )
 
+
+
 # Removed SQLAlchemy database connection since Supabase is used
 
 # app.mount('/images', StaticFiles(directory='images'), name='images')
