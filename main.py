@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from routers import users
 from routers.production_planning import batch, batch_assignee, task, task_assignee, task_dependency, task_machinery, task_raw_materials
-#from routers.machinery_equipement.machinery_equipement import router as machinery_router
+from routers.machinery_equipement.machinery_equipement import router as machinery_router
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -19,7 +19,7 @@ app.include_router(task_machinery.router)
 app.include_router(task_raw_materials.router)
 app.include_router(users.router)
 
-#app.include_router(machinery_router)
+app.include_router(machinery_router)
 
 
 @app.get("/")
