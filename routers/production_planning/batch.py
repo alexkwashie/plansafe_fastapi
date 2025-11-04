@@ -2,7 +2,6 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, status
 from dependencies.auth import verify_token
 from routers.schemas import BatchBase, BatchDisplay, BatchBaseUpdate
-from db.database import get_db
 from db.db_production_planning import db_batch
 from typing import List
 

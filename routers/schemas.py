@@ -185,7 +185,7 @@ class TaskAssigneeBase(BaseModel):  # what is displayed
 class TaskAssigneeDisplay(BaseModel):  # what is displayed
   task_id: Optional[uuid.UUID] = None
   user_id: Optional[uuid.UUID] = None
-  assignee_id: Optional[str] = None
+  assignee_id: Optional[uuid.UUID] = None
 
   class Config:
     orm_mode = True
@@ -280,8 +280,8 @@ class MachineryDisplay(BaseModel):
   machine_manufacture: Optional[str] = None
   location: Optional[str] = None
   status: Optional[str] = 'pending'
-  capacity:Optional[str] = None
-  power_rating: Optional[str] = None
+  capacity:Optional[int] = None
+  power_rating: Optional[int] = None
   created_at: Optional[datetime] = None
   created_by: Optional[uuid.UUID] = None
   updated_at: Optional[datetime] = None
@@ -292,23 +292,33 @@ class MachineryDisplay(BaseModel):
     
 
 class MachineryBase(BaseModel):  
-  machinery_id: uuid.UUID
   machine_name: str
   machine_type: Optional[str] = None
   machine_manufacture: Optional[str] = None
   location: Optional[str] = None
   status: Optional[str] = 'pending'
-  capacity:Optional[str] = None
-  power_rating: Optional[str] = None
+  capacity:Optional[int] = None
+  power_rating: Optional[int] = None
   created_at: Optional[datetime] = None
   created_by: Optional[uuid.UUID] = None
-  updated_at: Optional[datetime] = None
-  updated_by: Optional[uuid.UUID] = None
-  
+
   class Config:
     orm_mode = True
     
     
+class MachineryBaseUpdate(BaseModel):
+  machine_name: str
+  machine_type: Optional[str] = None
+  machine_manufacture: Optional[str] = None
+  location: Optional[str] = None
+  status: Optional[str] = 'pending'
+  capacity:Optional[int] = None
+  power_rating: Optional[int] = None
+  updated_at: Optional[datetime] = None
+  updated_by: Optional[uuid.UUID] = None
+  
+  class Config:
+    orm_mode = True   
 
 ######### Incident Table ###############
 class IncidentBase(BaseModel):
