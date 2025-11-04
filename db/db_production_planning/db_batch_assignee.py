@@ -3,8 +3,35 @@ from fastapi.responses import JSONResponse
 from supabase import create_client
 import os
 import uuid
+from dotenv import load_dotenv
+import os
 
-auth_supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
+# Load .env file (for local development)
+load_dotenv()
+
+# Load environment variables
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+
+# Basic validation
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise RuntimeError("Missing SUPABASE_URL or SUPABASE_KEY in environment variables")
+from dotenv import load_dotenv
+
+
+# Load .env file (for local development)
+load_dotenv()
+
+# Load environment variables
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+
+# Basic validation
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise RuntimeError("Missing SUPABASE_URL or SUPABASE_KEY in environment variables")
+
+# Create Supabase client (URL first, then key)
+auth_supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def create_batch_assignees(batch_id: uuid.UUID, user_id: uuid.UUID, user: dict = None):
     try:

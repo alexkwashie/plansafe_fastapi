@@ -4,10 +4,18 @@ import os
 import uuid
 from dotenv import load_dotenv
 
+# Load .env file (for local development)
 load_dotenv()
 
-auth_supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
+# Load environment variables
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 
+
+# Create Supabase client (URL first, then key)
+auth_supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+print(f"✅ Connected to Supabase project: {SUPABASE_URL}")
 
 def get_all_users():
     response = auth_supabase.table("users").select("*").execute()
