@@ -18,7 +18,7 @@ class UserDisplay(BaseModel): # what is displayed to the user
   uid: uuid.UUID
 
   class Config:
-    orm_mode = True
+        from_attributes = True
 
 
 ######### Batch Assignee ###############
@@ -29,7 +29,7 @@ class BatchAssigneeBase(BaseModel):
   batch_assignee_id: Optional[str] = None
 
   class Config:
-    orm_mode = True
+        from_attributes = True
     
 
 class BatchAssigneeDisplay(BaseModel):  # what is displayed
@@ -38,8 +38,7 @@ class BatchAssigneeDisplay(BaseModel):  # what is displayed
   batch_assignee_id: Optional[str] = None
 
   class Config:
-    orm_mode = True
-    
+        from_attributes = True
     
   
 ##### Batch Schema #####
@@ -59,7 +58,7 @@ class BatchBase(BaseModel):
     created_by: uuid.UUID
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         
 class BatchBaseUpdate(BaseModel):
     batch_title: str
@@ -77,7 +76,7 @@ class BatchBaseUpdate(BaseModel):
     updated_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class BatchDisplay(BaseModel): # what is displayed
     batch_id: Optional[uuid.UUID] = None
@@ -98,9 +97,7 @@ class BatchDisplay(BaseModel): # what is displayed
     updated_by: Optional[uuid.UUID] = None
 
     class Config:
-        orm_mode = True
-
-
+        from_attributes = True
 
 
 
@@ -121,7 +118,7 @@ class TaskBase(BaseModel):
     
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class TaskUpdateBase(BaseModel):
@@ -139,7 +136,7 @@ class TaskUpdateBase(BaseModel):
     updated_by: Optional[uuid.UUID] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TaskDisplay(BaseModel):  # what is displayed
   task_id: uuid.UUID
@@ -160,7 +157,7 @@ class TaskDisplay(BaseModel):  # what is displayed
   updated_by: Optional[uuid.UUID] = None
 
   class Config:
-    orm_mode = True
+    from_attributes = True
 
 
 class UserAuth(BaseModel):
@@ -179,7 +176,7 @@ class TaskAssigneeBase(BaseModel):  # what is displayed
   assignee_id: Optional[uuid.UUID] = None
 
   class Config:
-    orm_mode = True
+    from_attributes = True
     
 
 class TaskAssigneeDisplay(BaseModel):  # what is displayed
@@ -188,7 +185,7 @@ class TaskAssigneeDisplay(BaseModel):  # what is displayed
   assignee_id: Optional[uuid.UUID] = None
 
   class Config:
-    orm_mode = True
+    from_attributes = True
     
     
 ######### Task Dependency ###############
@@ -199,7 +196,7 @@ class TaskDependencyDisplay(BaseModel):
   task_id_2: Optional[uuid.UUID] = None
 
   class Config:
-    orm_mode = True
+    from_attributes = True
     
 
 class TaskDependencyBase(BaseModel):  
@@ -209,7 +206,7 @@ class TaskDependencyBase(BaseModel):
   task_id_2: Optional[uuid.UUID] = None
   
   class Config:
-    orm_mode = True
+    from_attributes = True
     
 
 ######### Task Incidence ###############
@@ -219,7 +216,7 @@ class TaskIncidentDisplay(BaseModel):
   incident_id: Optional[uuid.UUID] = None
   
   class Config:
-    orm_mode = True
+    from_attributes = True
     
 
 class TaskIncidentBase(BaseModel):  
@@ -228,7 +225,7 @@ class TaskIncidentBase(BaseModel):
   incident_id: Optional[uuid.UUID] = None
   
   class Config:
-    orm_mode = True
+    from_attributes = True
     
     
 ######### Task Machinery ###############
@@ -238,7 +235,7 @@ class TaskMachineryDisplay(BaseModel):
   machinery_id: Optional[uuid.UUID] = None
   
   class Config:
-    orm_mode = True
+    from_attributes = True
     
 
 class TaskMachineryBase(BaseModel):  
@@ -247,7 +244,7 @@ class TaskMachineryBase(BaseModel):
   machinery_id: Optional[uuid.UUID] = None
   
   class Config:
-    orm_mode = True
+    from_attributes = True
     
     
 ######### Task Raw Materials ###############
@@ -258,7 +255,7 @@ class TaskRawMaterialDisplay(BaseModel):
   assigned_quantity: Optional[int] = None
   
   class Config:
-    orm_mode = True
+    from_attributes = True
     
 
 class TaskRawMaterialBase(BaseModel):  
@@ -268,7 +265,7 @@ class TaskRawMaterialBase(BaseModel):
   assigned_quantity: Optional[int] = None
   
   class Config:
-    orm_mode = True
+    from_attributes = True
     
     
     
@@ -288,7 +285,7 @@ class MachineryDisplay(BaseModel):
   updated_by: Optional[uuid.UUID] = None
   
   class Config:
-    orm_mode = True
+    from_attributes = True
     
 
 class MachineryBase(BaseModel):  
@@ -303,7 +300,7 @@ class MachineryBase(BaseModel):
   created_by: Optional[uuid.UUID] = None
 
   class Config:
-    orm_mode = True
+    from_attributes = True
     
     
 class MachineryBaseUpdate(BaseModel):
@@ -318,7 +315,7 @@ class MachineryBaseUpdate(BaseModel):
   updated_by: Optional[uuid.UUID] = None
   
   class Config:
-    orm_mode = True   
+    from_attributes = True   
 
 ######### Incident Table ###############
 class IncidentBase(BaseModel):
@@ -333,7 +330,8 @@ class IncidentBase(BaseModel):
   incident_notes: Optional[str] = None
   incident_severity: Optional[str] = 'pending'
   
-
+  class Config:
+    from_attributes = True 
 
 class IncidentDisplay(BaseModel):
   incident_id: uuid.UUID
@@ -346,3 +344,6 @@ class IncidentDisplay(BaseModel):
   incident_time: Optional[datetime] = None
   incident_notes: Optional[str] = None
   incident_severity: Optional[str] = 'pending'
+
+  class Config:
+    from_attributes = True 
