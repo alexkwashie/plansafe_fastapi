@@ -28,7 +28,7 @@ class UserDisplay(BaseModel): # what is displayed to the user
 class BatchAssigneeBase(BaseModel):  
   batch_id: Optional[uuid.UUID] = None
   user_id: Optional[uuid.UUID] = None
-  batch_assignee_id: Optional[str] = None
+  batch_assignee_id: Optional[uuid.UUID] = None
 
   class Config:
     orm_mode = True
@@ -37,7 +37,7 @@ class BatchAssigneeBase(BaseModel):
 class BatchAssigneeDisplay(BaseModel):  # what is displayed
   batch_id: Optional[uuid.UUID] = None
   user_id: Optional[uuid.UUID] = None
-  batch_assignee_id: Optional[str] = None
+  batch_assignee_id: Optional[uuid.UUID] = None
 
   class Config:
     orm_mode = True

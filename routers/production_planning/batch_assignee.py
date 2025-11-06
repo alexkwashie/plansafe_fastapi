@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.post('/add/{batch_id}/assign/{user_id}', response_model=BatchAssigneeBase)
 def create(request: BatchAssigneeBase, batch_id: uuid.UUID, user_id: uuid.UUID):  # Ensure user_id is a UUID
-    return db_batch_assignee.create_task_assignees(batch_id, user_id, request)
+    return db_batch_assignee.create_batch_assignees(batch_id, user_id, request)
 
 
 @router.get('/all/{batch_id}', response_model=List[BatchAssigneeDisplay])

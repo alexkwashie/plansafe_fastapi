@@ -61,8 +61,8 @@ def get_all_batch_assignee(batch_id: uuid.UUID):
 
 
 
-def delete(assignees_id: uuid.UUID, db):
-    response = db.table("batch_assignees").delete().eq("batch_assignees_id", assignees_id).execute()
+def delete(assignees_id: uuid.UUID):
+    response = auth_supabase.table("batch_assignees").delete().eq("batch_assignees_id", assignees_id).execute()
     if not response.data:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Task with id: {id} not found")
     return JSONResponse(content={"message": f"Deleted: Task assignee with id:{assignees_id}"})
