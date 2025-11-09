@@ -189,27 +189,6 @@ class TaskAssigneeDisplay(BaseModel):  # what is displayed
   class Config():
     orm_mode = True
     
-    
-######### Task Dependency ###############
-class TaskDependencyDisplay(BaseModel):  
-  dependency_id: uuid.UUID
-  seq_no: Optional[int] = None
-  task_id_1: Optional[uuid.UUID] = None
-  task_id_2: Optional[uuid.UUID] = None
-
-  class Config():
-    orm_mode = True
-    
-
-class TaskDependencyBase(BaseModel):  
-  dependency_id: uuid.UUID
-  seq_no: Optional[int] = None
-  task_id_1: Optional[uuid.UUID] = None
-  task_id_2: Optional[uuid.UUID] = None
-  
-  class Config:
-    from_attributes = True
-    
 
 ######### Task Incidence ###############
 class TaskIncidentDisplay(BaseModel):  

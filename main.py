@@ -14,7 +14,6 @@ app.include_router(batch_assignee.router)
 
 app.include_router(task.router)
 app.include_router(task_assignee.router)
-app.include_router(task_dependency.router)
 app.include_router(task_machinery.router)
 app.include_router(task_raw_materials.router)
 app.include_router(users.router)
