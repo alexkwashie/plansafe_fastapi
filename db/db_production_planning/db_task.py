@@ -31,7 +31,6 @@ def create_task(request: TaskBase, batch_id: uuid.UUID):
         # Prepare the data dictionary for insertion
         task_data = {
             "batch_id": str(batch_id),
-            "task_seq": request.task_seq,
             "task_name": request.task_name,
             "task_description": request.task_description,
             "task_notes": request.task_notes,
@@ -97,7 +96,6 @@ def update_task(task_id: uuid.UUID, request: TaskUpdateBase):
             return None
 
         task_data = {
-            "task_seq": request.task_seq,
             "task_name": request.task_name,
             "task_description": request.task_description,
             "task_notes": request.task_notes,

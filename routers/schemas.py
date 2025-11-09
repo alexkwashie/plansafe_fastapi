@@ -106,7 +106,6 @@ class BatchDisplay(BaseModel): # what is displayed
 
 class TaskBase(BaseModel):
     batch_id: uuid.UUID
-    task_seq: Optional[int] = None
     task_name: str
     task_description: Optional[str] = None
     task_notes: Optional[str] = None
@@ -124,7 +123,6 @@ class TaskBase(BaseModel):
 
 
 class TaskUpdateBase(BaseModel):
-    task_seq: Optional[int] = None
     task_name: str
     task_description: Optional[str] = None
     task_notes: Optional[str] = None
@@ -143,7 +141,6 @@ class TaskUpdateBase(BaseModel):
 class TaskDisplay(BaseModel):  # what is displayed
   task_id: uuid.UUID
   batch_id: uuid.UUID
-  task_seq: Optional[int] = None
   task_name: str
   task_description: Optional[str] = None
   task_notes: Optional[str] = None
