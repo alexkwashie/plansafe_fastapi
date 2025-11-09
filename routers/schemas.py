@@ -175,16 +175,16 @@ class UserAuth(BaseModel):
 class TaskAssigneeBase(BaseModel):  # what is displayed
   task_id: Optional[uuid.UUID] = None
   user_id: Optional[uuid.UUID] = None
-  assignee_id: Optional[uuid.UUID] = None
+  assignees_id: Optional[uuid.UUID] = None
 
   class Config():
     orm_mode = True
     
 
 class TaskAssigneeDisplay(BaseModel):  # what is displayed
+  assignees_id: Optional[uuid.UUID] = None
   task_id: Optional[uuid.UUID] = None
   user_id: Optional[uuid.UUID] = None
-  assignee_id: Optional[uuid.UUID] = None
 
   class Config():
     orm_mode = True
