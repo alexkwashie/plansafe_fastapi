@@ -114,3 +114,16 @@ class UserAuth(BaseModel):
   id: int
   username: str
   email: str
+
+
+raw_material_id: uuid.UUID
+  raw_material_name: uuid.UUID
+  raw_material_code: Optional[str] = None
+  quantity: int
+  supplier: Optional[str] = None
+  unit_of_measure: Optional[str] = None
+  reorder_level:Optional[int] = None
+  unit_cost:Optional[int] = None
+  expiry_date:Optional[datetime] = None
+  storage_location:Optional[str] = None
+  category: Optional[str] = None

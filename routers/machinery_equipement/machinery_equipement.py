@@ -22,12 +22,12 @@ def all_machinery():
 
 @router.put('/update/{id}', response_model=MachineryDisplay)
 def update(id: uuid.UUID, request: MachineryBaseUpdate):
-    """Update a maachinery by its ID."""
+    """Update a machinery by its ID."""
     return db_machinery_equipement.update_machinery(id, request)
 
 @router.delete('/delete/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete(id: uuid.UUID):
-    """Delete a task raw materials by its ID."""
+    """Delete a task machinery by its ID."""
     if not db_machinery_equipement.delete(id):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Related Machinery not found")
     return {"detail": f"Machinery with id:{id} deleted successfully"}

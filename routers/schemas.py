@@ -327,4 +327,47 @@ class IncidentDisplay(BaseModel):
     orm_mode = True
     
     
+
+######### RawMaterial Table ###############
+class RawMaterialBase(BaseModel):
+  raw_material_id: uuid.UUID
+  raw_material_name: str
+  raw_material_code: Optional[str] = None
+  quantity: int
+  reorder_level:Optional[int] = None
+  unit_cost:Optional[int] = None
+  category: Optional[str] = None
+  created_at: Optional[datetime] = None
+  created_by: Optional[uuid.UUID] = None
+  
+  
+  class Config():
+    orm_mode = True 
+
+class RawMaterialUpdate(BaseModel):
+  raw_material_id: uuid.UUID
+  raw_material_name: str
+  raw_material_code: Optional[str] = None
+  quantity: int
+  reorder_level:Optional[int] = None
+  unit_cost:Optional[int] = None
+  category: Optional[str] = None
+  updated_at: Optional[datetime] = None
+  updated_by: Optional[uuid.UUID] = None
+  
+  
+  class Config():
+    orm_mode = True 
     
+class RawMaterialDisplay(BaseModel):
+  raw_material_id: uuid.UUID
+  raw_material_name: str
+  raw_material_code: Optional[str] = None
+  quantity: int
+  reorder_level:Optional[int] = None
+  unit_cost:Optional[int] = None
+  category: Optional[str] = None
+  created_by: Optional[uuid.UUID] = None
+
+  class Config():
+    orm_mode = True
