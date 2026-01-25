@@ -88,7 +88,6 @@ def update_raw_material(id: uuid.UUID, request: RawMaterialUpdate, user: dict = 
         
         # Prepare the data dictionary for updating
         updated_raw_material_data = {
-                "raw_material_id": str(uuid.uuid4()),
                 "raw_material_name": request.raw_material_name,
                 "raw_material_code": request.raw_material_code,
                 "quantity": request.quantity,

@@ -345,7 +345,6 @@ class RawMaterialBase(BaseModel):
     orm_mode = True 
 
 class RawMaterialUpdate(BaseModel):
-  raw_material_id: uuid.UUID
   raw_material_name: str
   raw_material_code: Optional[str] = None
   quantity: int
@@ -360,7 +359,6 @@ class RawMaterialUpdate(BaseModel):
     orm_mode = True 
     
 class RawMaterialDisplay(BaseModel):
-  raw_material_id: uuid.UUID
   raw_material_name: str
   raw_material_code: Optional[str] = None
   quantity: int
