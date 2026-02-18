@@ -1,38 +1,42 @@
 import uuid
 from fastapi import APIRouter, Depends, HTTPException, status
-from dependencies.auth import verify_token
+from dependencies.auth_token import get_current_user
 from routers.schemas import BatchBase, BatchDisplay, BatchBaseUpdate
+from routers.pagination import PaginationParams
+from routers.response import paginated_response
 from db.db_production_planning import db_batch
-from typing import List
 
 
 router = APIRouter(
-    prefix='/batch',
-    tags=['batch']
+    prefix='/api/v1/batches',
+    tags=['batches']
 )
 
 
-#Batch end points
-#@router.post('/create-batch', response_model=BatchDisplay)
-#def create(request: BatchBase, db=Depends(get_db)):
-#    return db_batch.create_batch(db, request)
-
-@router.post('/create-batch', response_model=BatchDisplay)
-def create(request: BatchBase, user=Depends(verify_token)):
+@router.post('/', response_model=BatchDisplay)
+async def create(request: BatchBase, user=Depends(get_current_user)):
     return db_batch.create_batch(request, user)
 
-@router.get('/all', response_model=List[BatchDisplay])
-def batchs():
-    return db_batch.get_all()
 
-@router.put('/update/{id}', response_model=BatchDisplay)
-def update(id: uuid.UUID, request: BatchBaseUpdate):
-    """Update a task by its ID."""
-    return db_batch.update_batch(id, request)
+@router.get('/')
+async def list_batches(pagination: PaginationParams = Depends()):
+    data, total = db_batch.get_all(offset=pagination.offset, limit=pagination.limit)
+    return paginated_response(data, total, pagination.page, pagination.per_page)
 
-@router.delete('/delete/{id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete(id: uuid.UUID):
-    """Delete a task raw materials by its ID."""
-    if not db_batch.delete(id):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Related Task not found")
-    return {"detail": f"Batch with id:{id} deleted successfully"}
+
+@router.get('/{batch_id}', response_model=BatchDisplay)
+async def get_batch(batch_id: uuid.UUID):
+    return db_batch.get_by_id(batch_id)
+
+
+@router.put('/{batch_id}', response_model=BatchDisplay)
+async def update(batch_id: uuid.UUID, request: BatchBaseUpdate, user=Depends(get_current_user)):
+    """Update a batch by its ID."""
+    return db_batch.update_batch(batch_id, request)
+
+
+@router.delete('/{batch_id}', status_code=status.HTTP_204_NO_CONTENT)
+async def delete(batch_id: uuid.UUID, user=Depends(get_current_user)):
+    """Delete a batch by its ID."""
+    if not db_batch.delete(batch_id):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Batch not found")

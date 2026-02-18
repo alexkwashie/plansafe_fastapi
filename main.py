@@ -1,8 +1,14 @@
 from fastapi import FastAPI
 from routers import users
+from routers.auth import router as auth_router
 from routers.production_planning import batch, batch_assignee, task, task_assignee, task_machinery, task_raw_materials
 from routers.machinery_equipement.machinery_equipement import router as machinery_router
+from routers.incident import router as incidents_router
 from routers.raw_materials import router as raw_material_router
+from routers.notes import router as notes_router
+from routers.upload import router as upload_router
+from routers.dashboard import router as dashboard_router
+from routers.notifications import router as notifications_router
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -10,6 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 #app = FastAPI(docs_url=None, redoc_url=None)
 
+app.include_router(auth_router)
 app.include_router(batch.router)
 app.include_router(batch_assignee.router)
 
@@ -21,6 +28,11 @@ app.include_router(users.router)
 
 app.include_router(machinery_router)
 app.include_router(raw_material_router)
+app.include_router(incidents_router)
+app.include_router(notes_router)
+app.include_router(upload_router)
+app.include_router(dashboard_router)
+app.include_router(notifications_router)
 
 
 @app.get("/")

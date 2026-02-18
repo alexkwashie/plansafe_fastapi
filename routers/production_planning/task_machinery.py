@@ -1,35 +1,31 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from dependencies.auth import verify_token
-from routers.schemas import TaskMachineryBase, TaskMachineryDisplay
-from db.database import get_db
-from db.db_production_planning import db_task_machinery
-from typing import List
-from routers.schemas import UserAuth
 import uuid
+from fastapi import APIRouter, Depends, HTTPException, status
+from dependencies.auth_token import get_current_user
+from routers.schemas import TaskMachineryBase, TaskMachineryDisplay
+from routers.pagination import PaginationParams
+from routers.response import paginated_response
+from db.db_production_planning import db_task_machinery
 
 
 router = APIRouter(
-    prefix='/task-machinery',
+    prefix='/api/v1',
     tags=['task-machinery']
 )
 
 
-@router.post('/add/{task_id}/machinery/{machinery_id}', response_model=TaskMachineryBase)
-def create(request: TaskMachineryBase, task_id: uuid.UUID, machinery_id: uuid.UUID, db=Depends(get_db), user=Depends(verify_token)):
-    return db_task_machinery.create_task_machinery(request, task_id, machinery_id ,user)
+@router.post('/tasks/{task_id}/machinery', response_model=TaskMachineryDisplay)
+async def create(request: TaskMachineryBase, task_id: uuid.UUID, user=Depends(get_current_user)):
+    return db_task_machinery.create_task_machinery(request, task_id, request.machinery_id, user)
 
 
-@router.get('/all/{task_id}', response_model=List[TaskMachineryDisplay])
-def all_task_assignees(task_id: uuid.UUID, db=Depends(get_db)):
-    return db_task_machinery.get_all_task_machinery(db, task_id)
+@router.get('/tasks/{task_id}/machinery')
+async def list_task_machinery(task_id: uuid.UUID, pagination: PaginationParams = Depends()):
+    data, total = db_task_machinery.get_all_task_machinery(task_id, offset=pagination.offset, limit=pagination.limit)
+    return paginated_response(data, total, pagination.page, pagination.per_page)
 
 
-@router.delete('/delete/{task_machinery_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete(task_machinery_id: uuid.UUID, db=Depends(get_db)):
+@router.delete('/task-machinery/{task_machinery_id}', status_code=status.HTTP_204_NO_CONTENT)
+async def delete(task_machinery_id: uuid.UUID, user=Depends(get_current_user)):
     """Delete a task machinery by its ID."""
-    if not db_task_machinery.delete(task_machinery_id, db):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Incident not found")
-    return {"detail": f"Assignee {task_machinery_id} deleted successfully"}
-
-
-
+    if not db_task_machinery.delete(task_machinery_id):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task machinery not found")

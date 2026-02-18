@@ -1,32 +1,30 @@
 from fastapi import HTTPException, status
 from routers.schemas import TaskRawMaterialBase
 from fastapi.responses import JSONResponse
-from supabase import create_client
-import os
 import uuid
+from db.supabase_client import supabase
 
-auth_supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
 
-def create_task_raw_material(db, request: TaskRawMaterialBase, task_id: uuid.UUID, raw_material_id: uuid.UUID,user: dict = None):
+def create_task_raw_material(request: TaskRawMaterialBase, task_id: uuid.UUID, raw_material_id: uuid.UUID, user: dict = None):
     try:
-        # Create Supabase client with the user's token
         if user and "access_token" in user and "refresh_token" in user:
-            auth_supabase.auth.set_session(
+            supabase.auth.set_session(
                 user["access_token"], user["refresh_token"]
             )
-            
-        raw_material_item = db.table("raw_materials").select("*").eq("raw_material_id", raw_material_id).execute()
-        
-        # Prepare the data dictionary for insertion
+
+        raw_material_response = supabase.table("raw_materials").select("*").eq("raw_material_id", str(raw_material_id)).execute()
+        if not raw_material_response.data:
+            raise HTTPException(status_code=404, detail=f"Raw material with id: {raw_material_id} not found")
+        raw_material_item = raw_material_response.data[0]
+
         task_raw_material_data = {
             "task_id": str(task_id),
             "raw_material_id": str(raw_material_id),
-            "material_name": raw_material_item.material_name,
+            "material_name": raw_material_item.get("raw_material_name"),
             "assigned_quantity": request.assigned_quantity
-            }
+        }
 
-        result = (auth_supabase.table("task_raw_material").insert(task_raw_material_data).execute())
-        
+        result = (supabase.table("task_raw_materials").insert(task_raw_material_data).execute())
 
         if not result.data:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Failed to create task raw material")
@@ -38,22 +36,28 @@ def create_task_raw_material(db, request: TaskRawMaterialBase, task_id: uuid.UUI
         raise HTTPException(status_code=500, detail=str(error))
 
 
+def get_all_task_raw_material(task_id: uuid.UUID, offset: int = 0, limit: int = 20):
+    count_response = (
+        supabase.table("task_raw_materials")
+        .select("*", count="exact")
+        .eq("task_id", str(task_id))
+        .limit(0)
+        .execute()
+    )
+    total = count_response.count or 0
+
+    response = (
+        supabase.table("task_raw_materials")
+        .select("*")
+        .eq("task_id", str(task_id))
+        .range(offset, offset + limit - 1)
+        .execute()
+    )
+    return response.data or [], total
 
 
-
-def get_all_task_raw_material(db, task_id: uuid.UUID):
-    response = db.table("task_raw_material").select("*").eq("task_id", task_id).execute()
+def delete(id: uuid.UUID):
+    response = supabase.table("task_raw_materials").delete().eq("task_raw_material_id", id).execute()
     if not response.data:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Failed to get related task raw material")
-    task_raw_material = response.data
-
-    
-    return task_raw_material
-
-
-
-def delete(id: uuid.UUID, db):
-    response = db.table("task_raw_material").delete().eq("task_machinery_id", id).execute()
-    if not response.data:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Task Raw material with id: {id} not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Task raw material with id: {id} not found")
     return JSONResponse(content={"message": f"Deleted: Task raw material with id:{id}"})
