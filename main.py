@@ -9,6 +9,12 @@ from routers.notes import router as notes_router
 from routers.upload import router as upload_router
 from routers.dashboard import router as dashboard_router
 from routers.notifications import router as notifications_router
+from routers.investigations import router as investigations_router
+from routers.capa import router as capa_router
+from routers.checklists import router as checklists_router
+from routers.inspections_routes import router as inspections_router
+from routers.reports import router as reports_router
+from routers.shift_handovers import router as shift_handovers_router
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -33,6 +39,12 @@ app.include_router(notes_router)
 app.include_router(upload_router)
 app.include_router(dashboard_router)
 app.include_router(notifications_router)
+app.include_router(investigations_router)
+app.include_router(capa_router)
+app.include_router(checklists_router)
+app.include_router(inspections_router)
+app.include_router(reports_router)
+app.include_router(shift_handovers_router)
 
 
 @app.get("/")

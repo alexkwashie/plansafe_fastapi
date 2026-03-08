@@ -368,6 +368,18 @@ class IncidentBase(BaseModel):
   immediate_actions: Optional[str] = None
   witness_info: Optional[str] = None
   is_anonymous: Optional[bool] = False
+  # OSHA fields
+  employee_name: Optional[str] = None
+  job_title_at_time: Optional[str] = None
+  date_of_injury: Optional[date] = None
+  injury_description: Optional[str] = None
+  body_part_affected: Optional[str] = None
+  injury_type: Optional[str] = None
+  days_away: Optional[int] = 0
+  days_restricted: Optional[int] = 0
+  death: Optional[bool] = False
+  treated_in_er: Optional[bool] = False
+  hospitalized: Optional[bool] = False
 
   class Config():
     from_attributes = True
@@ -386,6 +398,18 @@ class IncidentUpdate(BaseModel):
   immediate_actions: Optional[str] = None
   witness_info: Optional[str] = None
   is_anonymous: Optional[bool] = None
+  # OSHA fields
+  employee_name: Optional[str] = None
+  job_title_at_time: Optional[str] = None
+  date_of_injury: Optional[date] = None
+  injury_description: Optional[str] = None
+  body_part_affected: Optional[str] = None
+  injury_type: Optional[str] = None
+  days_away: Optional[int] = None
+  days_restricted: Optional[int] = None
+  death: Optional[bool] = None
+  treated_in_er: Optional[bool] = None
+  hospitalized: Optional[bool] = None
 
   class Config():
     from_attributes = True
@@ -408,6 +432,18 @@ class IncidentDisplay(BaseModel):
   immediate_actions: Optional[str] = None
   witness_info: Optional[str] = None
   is_anonymous: Optional[bool] = False
+  # OSHA fields
+  employee_name: Optional[str] = None
+  job_title_at_time: Optional[str] = None
+  date_of_injury: Optional[date] = None
+  injury_description: Optional[str] = None
+  body_part_affected: Optional[str] = None
+  injury_type: Optional[str] = None
+  days_away: Optional[int] = 0
+  days_restricted: Optional[int] = 0
+  death: Optional[bool] = False
+  treated_in_er: Optional[bool] = False
+  hospitalized: Optional[bool] = False
 
   class Config():
     from_attributes = True
@@ -572,6 +608,263 @@ class NotificationDisplay(BaseModel):
     entity_id: Optional[uuid.UUID] = None
     message: str
     read: bool = False
+    created_at: Optional[datetime] = None
+
+    class Config():
+        from_attributes = True
+
+
+######### Investigations ###############
+class InvestigationStatusEnum(str, Enum):
+    open = "open"
+    in_progress = "in_progress"
+    closed = "closed"
+
+
+class InvestigationTypeEnum(str, Enum):
+    five_why = "five_why"
+    fishbone = "fishbone"
+    root_cause = "root_cause"
+
+
+class InvestigationBase(BaseModel):
+    assigned_to: Optional[uuid.UUID] = None
+    investigation_type: Optional[InvestigationTypeEnum] = None
+    findings: Optional[str] = None
+    root_cause: Optional[str] = None
+
+    class Config():
+        from_attributes = True
+
+
+class InvestigationUpdate(BaseModel):
+    assigned_to: Optional[uuid.UUID] = None
+    status: Optional[InvestigationStatusEnum] = None
+    investigation_type: Optional[InvestigationTypeEnum] = None
+    findings: Optional[str] = None
+    root_cause: Optional[str] = None
+
+    class Config():
+        from_attributes = True
+
+
+class InvestigationDisplay(BaseModel):
+    investigation_id: uuid.UUID
+    incident_id: uuid.UUID
+    assigned_to: Optional[uuid.UUID] = None
+    status: Optional[str] = None
+    investigation_type: Optional[str] = None
+    findings: Optional[str] = None
+    root_cause: Optional[str] = None
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+    closed_at: Optional[datetime] = None
+
+    class Config():
+        from_attributes = True
+
+
+######### CAPA Actions ###############
+class CAPAActionTypeEnum(str, Enum):
+    corrective = "corrective"
+    preventive = "preventive"
+
+
+class CAPAStatusEnum(str, Enum):
+    open = "open"
+    in_progress = "in_progress"
+    completed = "completed"
+    overdue = "overdue"
+
+
+class CAPABase(BaseModel):
+    action_type: CAPAActionTypeEnum
+    description: str
+    assigned_to: Optional[uuid.UUID] = None
+    due_date: Optional[date] = None
+
+    class Config():
+        from_attributes = True
+
+
+class CAPAUpdate(BaseModel):
+    action_type: Optional[CAPAActionTypeEnum] = None
+    description: Optional[str] = None
+    assigned_to: Optional[uuid.UUID] = None
+    due_date: Optional[date] = None
+    status: Optional[CAPAStatusEnum] = None
+
+    class Config():
+        from_attributes = True
+
+
+class CAPADisplay(BaseModel):
+    capa_id: uuid.UUID
+    investigation_id: uuid.UUID
+    action_type: Optional[str] = None
+    description: str
+    assigned_to: Optional[uuid.UUID] = None
+    due_date: Optional[date] = None
+    status: Optional[str] = None
+    completed_at: Optional[datetime] = None
+    created_at: Optional[datetime] = None
+
+    class Config():
+        from_attributes = True
+
+
+######### Checklist Templates ###############
+class ChecklistTypeEnum(str, Enum):
+    pre_shift = "pre_shift"
+    equipment = "equipment"
+    area = "area"
+
+
+class ChecklistTemplateBase(BaseModel):
+    name: str
+    type: ChecklistTypeEnum = ChecklistTypeEnum.pre_shift
+
+    class Config():
+        from_attributes = True
+
+
+class ChecklistTemplateUpdate(BaseModel):
+    name: Optional[str] = None
+    type: Optional[ChecklistTypeEnum] = None
+
+    class Config():
+        from_attributes = True
+
+
+class ChecklistTemplateDisplay(BaseModel):
+    template_id: uuid.UUID
+    name: str
+    type: Optional[str] = None
+    created_by: Optional[uuid.UUID] = None
+    created_at: Optional[datetime] = None
+
+    class Config():
+        from_attributes = True
+
+
+class TemplateItemBase(BaseModel):
+    item_text: str
+    sort_order: Optional[int] = 0
+    required: Optional[bool] = True
+
+    class Config():
+        from_attributes = True
+
+
+class TemplateItemDisplay(BaseModel):
+    item_id: uuid.UUID
+    template_id: uuid.UUID
+    item_text: str
+    sort_order: Optional[int] = 0
+    required: Optional[bool] = True
+    created_at: Optional[datetime] = None
+
+    class Config():
+        from_attributes = True
+
+
+######### Inspections ###############
+class InspectionStatusEnum(str, Enum):
+    pending = "pending"
+    in_progress = "in_progress"
+    completed = "completed"
+
+
+class InspectionResponseValueEnum(str, Enum):
+    pass_val = "pass"
+    fail = "fail"
+    na = "na"
+
+
+class InspectionBase(BaseModel):
+    template_id: uuid.UUID
+    inspector_id: Optional[uuid.UUID] = None
+    scheduled_date: Optional[date] = None
+    notes: Optional[str] = None
+
+    class Config():
+        from_attributes = True
+
+
+class InspectionUpdate(BaseModel):
+    status: Optional[InspectionStatusEnum] = None
+    scheduled_date: Optional[date] = None
+    notes: Optional[str] = None
+
+    class Config():
+        from_attributes = True
+
+
+class InspectionDisplay(BaseModel):
+    inspection_id: uuid.UUID
+    template_id: uuid.UUID
+    inspector_id: Optional[uuid.UUID] = None
+    status: Optional[str] = None
+    scheduled_date: Optional[date] = None
+    completed_at: Optional[datetime] = None
+    notes: Optional[str] = None
+    created_at: Optional[datetime] = None
+
+    class Config():
+        from_attributes = True
+
+
+class InspectionResponseBase(BaseModel):
+    template_item_id: uuid.UUID
+    response: InspectionResponseValueEnum
+    notes: Optional[str] = None
+    photo_url: Optional[str] = None
+
+    class Config():
+        from_attributes = True
+
+
+class InspectionResponseDisplay(BaseModel):
+    response_id: uuid.UUID
+    inspection_id: uuid.UUID
+    template_item_id: uuid.UUID
+    response: Optional[str] = None
+    notes: Optional[str] = None
+    photo_url: Optional[str] = None
+    created_at: Optional[datetime] = None
+
+    class Config():
+        from_attributes = True
+
+
+######### Shift Handovers ###############
+class ShiftHandoverBase(BaseModel):
+    incoming_user_id: Optional[uuid.UUID] = None
+    shift_date: date
+    batch_status_summary: Optional[str] = None
+    outstanding_issues: Optional[str] = None
+    tasks_completed: Optional[str] = None
+    tasks_remaining: Optional[str] = None
+    equipment_notes: Optional[str] = None
+    incidents_occurred: Optional[str] = None
+
+    class Config():
+        from_attributes = True
+
+
+class ShiftHandoverDisplay(BaseModel):
+    handover_id: uuid.UUID
+    outgoing_user_id: Optional[uuid.UUID] = None
+    incoming_user_id: Optional[uuid.UUID] = None
+    shift_date: Optional[date] = None
+    batch_status_summary: Optional[str] = None
+    outstanding_issues: Optional[str] = None
+    tasks_completed: Optional[str] = None
+    tasks_remaining: Optional[str] = None
+    equipment_notes: Optional[str] = None
+    incidents_occurred: Optional[str] = None
+    acknowledged: Optional[bool] = False
+    acknowledged_at: Optional[datetime] = None
     created_at: Optional[datetime] = None
 
     class Config():

@@ -25,6 +25,17 @@ def create_incident(request: IncidentBase, user, task_id: uuid.UUID):
             "immediate_actions": request.immediate_actions,
             "witness_info": request.witness_info,
             "is_anonymous": request.is_anonymous,
+            "employee_name": request.employee_name,
+            "job_title_at_time": request.job_title_at_time,
+            "date_of_injury": request.date_of_injury.isoformat() if request.date_of_injury else None,
+            "injury_description": request.injury_description,
+            "body_part_affected": request.body_part_affected,
+            "injury_type": request.injury_type,
+            "days_away": request.days_away,
+            "days_restricted": request.days_restricted,
+            "death": request.death,
+            "treated_in_er": request.treated_in_er,
+            "hospitalized": request.hospitalized,
         }
 
         result = (
@@ -123,6 +134,28 @@ def update_incident(incident_id: uuid.UUID, request: IncidentUpdate, user: dict 
             update_data["witness_info"] = request.witness_info
         if request.is_anonymous is not None:
             update_data["is_anonymous"] = request.is_anonymous
+        if request.employee_name is not None:
+            update_data["employee_name"] = request.employee_name
+        if request.job_title_at_time is not None:
+            update_data["job_title_at_time"] = request.job_title_at_time
+        if request.date_of_injury is not None:
+            update_data["date_of_injury"] = request.date_of_injury.isoformat()
+        if request.injury_description is not None:
+            update_data["injury_description"] = request.injury_description
+        if request.body_part_affected is not None:
+            update_data["body_part_affected"] = request.body_part_affected
+        if request.injury_type is not None:
+            update_data["injury_type"] = request.injury_type
+        if request.days_away is not None:
+            update_data["days_away"] = request.days_away
+        if request.days_restricted is not None:
+            update_data["days_restricted"] = request.days_restricted
+        if request.death is not None:
+            update_data["death"] = request.death
+        if request.treated_in_er is not None:
+            update_data["treated_in_er"] = request.treated_in_er
+        if request.hospitalized is not None:
+            update_data["hospitalized"] = request.hospitalized
 
         if not update_data:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No fields to update")
