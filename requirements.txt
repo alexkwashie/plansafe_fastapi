@@ -6,3 +6,6 @@ python-jose
 httpx
 supabase
 python-dotenv
+python-multipart
+aiosmtplib
+fpdf2
